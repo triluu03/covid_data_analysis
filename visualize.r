@@ -12,6 +12,35 @@ total_deaths_beta <- merge(data[, c(1,2,4)], country_information)
 total_deaths <- total_deaths_beta[total_deaths_beta$total_deaths != 'NULL', ]
 
 
-# Plot the total_cases along with:
+# Colors according to the continents
+color <- as.factor(total_cases$continent)
+levels(color) <- c('red', 'green', 'blue', 'black', 'violet', 'yellow')
+
+# Plot the total cases along with:
   # population
-plot(x = total_cases$population/10^6, y = total_cases$total_cases/10^6,xlab = 'Population (million)', ylab='Total cases (million)')
+plot(
+  x = total_cases$population, 
+  y = total_cases$total_cases,
+  xlab = 'Population', 
+  ylab = 'Total cases', 
+  main = 'Total Cases ~ Population',
+  log='xy',
+  col = as.vector(color),
+  pch = 16
+)
+legend('topleft', legend = levels(as.factor(total_cases$continent)), col = levels(color), pch = 20)
+  
+
+# Plot the total deaths along with:
+  # population
+plot(
+  x = total_deaths$population,
+  y = total_deaths$total_deaths,
+  xlab = 'Population',
+  ylab = 'Total Deaths',
+  main = 'Total Deaths ~ Population',
+  log = 'xy',
+  col = as.vector(color),
+  pch = 16
+)
+legend('topleft', legend = levels(as.factor(total_cases$continent)), col = levels(color), pch = 20)
